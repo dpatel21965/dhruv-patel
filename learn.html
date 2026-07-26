@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{var _t=localStorage.getItem("dp-theme");if(_t==="dark")document.documentElement.setAttribute("data-theme","dark");}catch(e){}</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Learn CAD — Dhruv Patel</title>
+<meta name="description" content="A deep, illustrated Onshape CAD course: fundamentals, FTC, and FRC — modeled on the Onshape Learning Center and FRCDesign.org." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<meta name="theme-color" content="#F4F5F7" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2032%2032%27%3E%3Crect%20width%3D%2732%27%20height%3D%2732%27%20rx%3D%275%27%20fill%3D%27%231B1E24%27/%3E%3Cpath%20d%3D%27M6%2023%20L16%207%20L26%2023%20Z%27%20fill%3D%27none%27%20stroke%3D%27%232456C7%27%20stroke-width%3D%272.6%27/%3E%3Ccircle%20cx%3D%2716%27%20cy%3D%2718%27%20r%3D%271.6%27%20fill%3D%27%23E3A43A%27/%3E%3C/svg%3E" />
+<style>
+  :root{
+    --bg:#F4F5F7; --bg-2:#EDEFF3; --surface:#FFFFFF; --surface-2:#EDEFF3;
+    --ink:#1B1E24; --ink-soft:#59616E; --ink-faint:#97A0AD;
+    --line:#DEE2E8; --line-2:#CBD2DC;
+    --accent:#2456C7; --accent-dim:#1B3E96; --amber:#B26A00; --amber-dim:#8A5200; --red:#D64545;
+    --grid:rgba(27,30,36,.045); --glow:rgba(36,86,199,.14);
+    --fd:'Archivo',system-ui,sans-serif; --fb:'Hanken Grotesk',system-ui,sans-serif; --fm:'JetBrains Mono',ui-monospace,monospace;
+    --toc:300px; --topbar:60px; --ease:cubic-bezier(.4,0,.2,1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--fb);color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3,h4{font-family:var(--fd);line-height:1.15;margin:0;letter-spacing:-.02em;}
+  .mono{font-family:var(--fm);}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:46px 46px;}
+
+  /* topbar */
+  .topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar);z-index:50;display:flex;align-items:center;gap:1rem;padding:0 1.2rem;background:rgba(244,245,247,.82);backdrop-filter:saturate(150%) blur(14px);border-bottom:1px solid var(--line);}
+  .back{display:inline-flex;align-items:center;gap:.5rem;font-size:.88rem;color:var(--ink-soft);font-weight:500;transition:.2s;}
+  .back:hover{color:var(--accent);}
+  .back svg{width:16px;height:16px;}
+  .tb-title{font-family:var(--fd);font-weight:600;font-size:1rem;}
+  .tb-title .mono{color:var(--accent);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;display:block;font-weight:500;}
+  .tb-right{margin-left:auto;display:flex;align-items:center;gap:1rem;}
+  .prog{width:160px;height:6px;background:var(--surface-2);border-radius:100px;overflow:hidden;border:1px solid var(--line);}
+  .prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--amber));transition:width .4s var(--ease);}
+  .prog-l{font-family:var(--fm);font-size:.7rem;color:var(--ink-faint);}
+  .menu-btn{display:none;background:none;border:1px solid var(--line-2);border-radius:8px;color:var(--ink);padding:.35rem .5rem;cursor:pointer;}
+
+  /* layout */
+  .shell{display:flex;padding-top:var(--topbar);position:relative;z-index:1;}
+  aside.toc{position:fixed;top:var(--topbar);bottom:0;left:0;width:var(--toc);overflow-y:auto;border-right:1px solid var(--line);background:var(--bg-2);padding:1.2rem .8rem 3rem;transition:transform .3s var(--ease);}
+  aside.toc::-webkit-scrollbar{width:8px;} aside.toc::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:8px;}
+  .track-h{font-family:var(--fm);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:1.3rem .6rem .5rem;display:flex;align-items:center;gap:.5rem;}
+  .track-h:first-child{margin-top:.2rem;}
+  .track-h .n{width:20px;height:20px;border:1px solid var(--accent-dim);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.62rem;color:var(--accent);}
+  .unit{margin-bottom:.2rem;}
+  .unit-t{font-family:var(--fd);font-weight:600;font-size:.82rem;color:var(--ink-soft);padding:.4rem .6rem;letter-spacing:0;}
+  .toc a.lz{display:flex;gap:.55rem;align-items:flex-start;padding:.42rem .6rem .42rem 1.2rem;border-radius:7px;font-size:.85rem;color:var(--ink-soft);transition:.15s;line-height:1.35;}
+  .toc a.lz:hover{background:var(--surface);color:var(--ink);}
+  .toc a.lz.active{background:rgba(36,86,199,.1);color:var(--accent);}
+  .toc a.lz .dot{width:6px;height:6px;border-radius:50%;border:1px solid var(--line-2);margin-top:.45rem;flex-shrink:0;}
+  .toc a.lz.active .dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 8px var(--glow);}
+  .toc a.lz.done .dot{background:var(--accent-dim);border-color:var(--accent-dim);}
+
+  main.content{margin-left:var(--toc);flex:1;min-width:0;max-width:none;padding:2.4rem max(clamp(1.1rem,4vw,3.5rem),calc((100vw - var(--toc) - 880px)/2)) 5rem;}
+
+  /* lesson page */
+  .crumb{font-family:var(--fm);font-size:.72rem;letter-spacing:.06em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:.8rem;}
+  .crumb b{color:var(--accent);}
+  .lesson-h{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:700;letter-spacing:-.03em;}
+  .lmeta{display:flex;gap:1.2rem;flex-wrap:wrap;margin:.9rem 0 1.8rem;font-family:var(--fm);font-size:.74rem;color:var(--ink-faint);}
+  .lmeta-i{display:inline-flex;align-items:center;gap:.4rem;}
+  .lmeta-i svg{width:14px;height:14px;color:var(--accent-dim);}
+  .intro{font-size:1.1rem;color:var(--ink-soft);border-left:3px solid var(--accent);padding-left:1.1rem;margin-bottom:2.2rem;}
+
+  .sec{margin-bottom:2.4rem;}
+  .sec h2{font-size:1.35rem;font-weight:600;margin-bottom:.4rem;display:flex;align-items:baseline;gap:.6rem;}
+  .sec h2 .sx{font-family:var(--fm);font-size:.8rem;color:var(--accent);}
+  .sec p{color:var(--ink-soft);margin:.6rem 0;}
+  .sec p b{color:var(--ink);}
+  .sec p code,.step code{font-family:var(--fm);font-size:.85em;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:.06rem .38rem;color:var(--accent);}
+
+  figure.fig{margin:1.4rem 0;background:var(--bg-2);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  figure.fig .frame{padding:1.4rem;display:flex;justify-content:center;background:radial-gradient(120% 120% at 50% 0%,#FBFCFD,#EEF1F5);}
+  figure.fig svg{width:100%;max-width:560px;height:auto;}
+  figure.fig figcaption{font-family:var(--fm);font-size:.76rem;color:var(--ink-faint);padding:.7rem 1rem;border-top:1px solid var(--line);display:flex;gap:.5rem;}
+  figure.fig figcaption b{color:var(--accent);}
+
+  ol.steps{counter-reset:s;list-style:none;padding:0;margin:1rem 0;display:grid;gap:.7rem;}
+  ol.steps li{counter-increment:s;position:relative;padding:.75rem .9rem .75rem 3rem;background:var(--surface);border:1px solid var(--line);border-radius:10px;font-size:.94rem;}
+  ol.steps li::before{content:counter(s);position:absolute;left:.75rem;top:.7rem;width:1.5rem;height:1.5rem;border-radius:7px;background:rgba(36,86,199,.1);border:1px solid var(--accent-dim);color:var(--accent);font-family:var(--fm);font-weight:700;font-size:.78rem;display:flex;align-items:center;justify-content:center;}
+  ol.steps li b{color:var(--ink);}
+
+  .callout{border-radius:10px;padding:.85rem 1rem .85rem 1rem;margin:1.2rem 0;font-size:.92rem;border:1px solid var(--line);display:flex;gap:.7rem;}
+  .callout svg{width:18px;height:18px;flex-shrink:0;margin-top:2px;}
+  .callout .ct{font-family:var(--fm);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:.2rem;}
+  .callout.note{background:rgba(36,86,199,.05);border-left:3px solid var(--accent);} .callout.note .ct,.callout.note svg{color:var(--accent);}
+  .callout.tip{background:rgba(255,176,32,.05);border-left:3px solid var(--amber);} .callout.tip .ct,.callout.tip svg{color:var(--amber);}
+  .callout.warn{background:rgba(255,107,107,.06);border-left:3px solid var(--red);} .callout.warn .ct,.callout.warn svg{color:var(--red);}
+  .callout .cbody{color:var(--ink-soft);}
+
+  .takeaways{background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.2rem 1.4rem;margin:2rem 0;}
+  .takeaways h3{font-size:1rem;display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem;}
+  .takeaways h3 svg{width:18px;height:18px;color:var(--accent);}
+  .takeaways ul{margin:0;padding-left:1.1rem;display:grid;gap:.35rem;}
+  .takeaways li{font-size:.9rem;color:var(--ink-soft);} .takeaways li::marker{color:var(--accent);}
+
+  .resources{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.4rem 0;}
+  .res{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.8rem;color:var(--accent);border:1px solid var(--accent-dim);background:rgba(36,86,199,.05);padding:.5rem .8rem;border-radius:8px;transition:.18s;}
+  .res:hover{background:var(--accent);color:#fff;} .res svg{width:15px;height:15px;}
+
+  .pager{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--line);}
+  .pg{flex:1;max-width:48%;border:1px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;transition:.2s;cursor:pointer;}
+  .pg:hover{border-color:var(--accent-dim);background:var(--surface);}
+  .pg.next{text-align:right;margin-left:auto;} .pg.disabled{opacity:.3;pointer-events:none;}
+  .pg .k{font-family:var(--fm);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);}
+  .pg .t{font-family:var(--fd);font-weight:600;font-size:.95rem;color:var(--ink);margin-top:.2rem;}
+
+  .scrim{display:none;position:fixed;inset:var(--topbar) 0 0;background:rgba(27,30,36,.35);z-index:40;}
+  html[data-theme="dark"]{--bg:#0E1116;--bg-2:#151A21;--surface:#151A21;--surface-2:#1B222B;--ink:#E9EDF2;--ink-soft:#A7B0BE;--ink-faint:#6C7686;--line:#26303C;--line-2:#33404E;--accent:#7EA6FF;--accent-dim:#5B84E0;--amber:#E3A54A;--red:#FF7A7A;--grid:rgba(255,255,255,.045);--glow:rgba(126,166,255,.18);}
+  html[data-theme="dark"] .topbar{background:rgba(14,17,22,.82);}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .theme-tog{background:none;border:1px solid var(--line-2);border-radius:8px;color:var(--ink-soft);width:34px;height:28px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s var(--ease);}
+  .theme-tog:hover{border-color:var(--accent);color:var(--accent);}
+  .theme-tog svg{width:15px;height:15px;}
+  .theme-tog .moon{display:none;} html[data-theme="dark"] .theme-tog .sun{display:none;} html[data-theme="dark"] .theme-tog .moon{display:inline;}
+  @media (max-width:900px){
+    :root{--toc:280px;}
+    .menu-btn{display:block;} .prog{width:90px;}
+    aside.toc{transform:translateX(-100%);z-index:45;box-shadow:0 0 40px rgba(27,30,36,.16);}
+    aside.toc.open{transform:none;} .scrim.open{display:block;}
+    main.content{margin-left:0;}
+    .pg{max-width:48%;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Portfolio</a>
+  <div class="tb-title"><span class="mono">Learn CAD</span><span id="tbLesson">Onshape from zero to competition robot</span></div>
+  <div class="tb-right">
+    <span class="prog-l" id="progL">0%</span>
+    <div class="prog"><i id="progBar"></i></div>
+    <button class="theme-tog" id="themeTog" aria-label="Toggle theme" title="Toggle theme"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></button>
+    <button class="menu-btn" id="menuBtn" aria-label="Outline"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="toc" id="toc"></aside>
+  <main class="content" id="page"></main>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<script>
+/* =========================================================================
+   FIGURE LIBRARY — schematic technical diagrams (accent line-art on dark)
+   ========================================================================= */
+const A="#2456C7", B="#C0791A", R="#D64545", G="#8A93A2", W="#1B1E24";
+const S=(vb,inner)=>`<svg viewBox="${vb}" fill="none" stroke="${A}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" font-family="JetBrains Mono, monospace">${inner}</svg>`;
+const T=(x,y,t,c=A,s=9)=>`<text x="${x}" y="${y}" fill="${c}" stroke="none" font-size="${s}">${t}</text>`;
+const FIG={
+ interface:S("0 0 560 300",`
+  <rect x="10" y="10" width="540" height="280" rx="6" stroke="${G}"/>
+  <rect x="10" y="10" width="540" height="30" rx="6" fill="${G}" fill-opacity=".15" stroke="${G}"/>
+  ${T(24,30,"● Part Studio ▸ Assembly ▸ Drawing",A,10)}
+  <rect x="10" y="40" width="540" height="26" stroke="${B}" stroke-opacity=".6"/>
+  ${T(20,58,"Sketch  Extrude  Revolve  Fillet  Hole  ⋯ (toolbar)",B,9)}
+  <rect x="10" y="66" width="120" height="224" stroke="${A}"/>
+  ${T(20,86,"Features",A,10)}
+  ${T(20,108,"▸ Origin",G,9)}${T(20,126,"▸ Sketch 1",G,9)}${T(20,144,"▸ Extrude 1",G,9)}${T(20,162,"▸ Fillet 1",G,9)}
+  ${T(18,285,"◀ rollback bar",G,8)}
+  <rect x="130" y="66" width="420" height="224" fill="${A}" fill-opacity=".03"/>
+  <path d="M300 130 380 130 380 210 300 210Z" stroke="${W}"/>
+  <path d="M300 130 330 110 410 110 380 130M380 210 410 190 410 110" stroke="${W}"/>
+  ${T(250,255,"graphics area — your model",G,9)}
+  <path d="M500 250 h30 M515 235 v30" stroke="${A}"/><circle cx="515" cy="250" r="3" stroke="${A}"/>`),
+
+ planes:S("0 0 560 260",`
+  <path d="M120 60 260 60 260 200 120 200Z" stroke="${A}" fill="${A}" fill-opacity=".05"/>${T(130,52,"FRONT",A,9)}
+  <path d="M260 60 360 30 360 170 260 200" stroke="${B}" fill="${B}" fill-opacity=".05"/>${T(300,45,"RIGHT",B,9)}
+  <path d="M120 60 220 30 360 30 260 60" stroke="${R}" fill="${R}" fill-opacity=".05"/>${T(230,25,"TOP",R,9)}
+  <circle cx="260" cy="200" r="4" fill="${W}" stroke="${W}"/>${T(268,214,"origin (0,0,0)",W,9)}
+  <path d="M400 200 v-70 M400 200 h70 M400 200 l40 -30" stroke="${W}"/>
+  ${T(474,204,"X",W,9)}${T(392,124,"Z",W,9)}${T(442,168,"Y",W,9)}
+  ${T(120,235,"Every sketch lives on a plane or a flat face.",G,9)}`),
+
+ sketchDraw:S("0 0 560 240",`
+  <rect x="40" y="40" width="480" height="170" stroke="${G}" stroke-dasharray="3 4"/>
+  <rect x="150" y="80" width="180" height="90" stroke="${A}"/>
+  <circle cx="400" cy="125" r="34" stroke="${A}"/>
+  <path d="M150 80 L110 60" stroke="${A}"/><circle cx="150" cy="80" r="3" fill="${A}" stroke="${A}"/>
+  ${T(60,70,"rectangle tool",A,9)}${T(370,70,"circle tool",A,9)}
+  <path d="M85 190 h60 M85 186 v8 M145 186 v8" stroke="${B}"/>${T(96,205,"120 mm",B,8)}
+  ${T(40,232,"Draw roughly first — set exact sizes with dimensions after.",G,9)}`),
+
+ constraints:S("0 0 560 240",`
+  ${T(70,30,"UNDER-DEFINED (blue)",R,9)}
+  <path d="M70 60 200 55 210 150 60 140Z" stroke="${R}"/>
+  ${T(84,190,"can still be dragged",G,8)}
+  <path d="M250 105 h60 M300 95 l12 10 -12 10" stroke="${W}"/>
+  ${T(360,30,"FULLY DEFINED (black)",A,9)}
+  <rect x="360" y="55" width="150" height="95" stroke="${W}"/>
+  ${T(430,52,"⟂",A,10)}${T(348,105,"=",A,11)}${T(520,105,"=",A,11)}
+  <path d="M360 165 h150 M360 161 v8 M510 161 v8" stroke="${B}"/>${T(420,182,"90",B,8)}
+  ${T(360,205,"locked by constraints + dimensions",G,8)}`),
+
+ extrude:S("0 0 560 230",`
+  <rect x="40" y="80" width="90" height="70" stroke="${A}" fill="${A}" fill-opacity=".06"/>${T(52,70,"sketch profile",A,8)}
+  <path d="M200 115 h70 M258 105 l14 10 -14 10" stroke="${W}"/>${T(206,100,"extrude",W,8)}
+  <path d="M320 90 h90 v70 h-90Z" stroke="${W}"/>
+  <path d="M320 90 355 65 445 65 410 90 M410 90 410 160 445 135 445 65" stroke="${W}"/>
+  <path d="M470 65 v95" stroke="${B}"/><path d="M466 70 l4 -5 4 5 M466 155 l4 5 4 -5" stroke="${B}"/>${T(478,120,"depth",B,8)}
+  ${T(40,205,"Extrude turns a 2D region into a 3D solid (Add) or cuts one (Remove).",G,9)}`),
+
+ endconditions:S("0 0 560 180",`
+  ${T(30,26,"Blind",A,9)}<rect x="30" y="40" width="60" height="40" stroke="${W}"/><path d="M100 60 h18" stroke="${B}"/>
+  ${T(150,26,"Symmetric",A,9)}<rect x="150" y="30" width="60" height="60" stroke="${W}"/><path d="M180 20 v80" stroke="${B}" stroke-dasharray="3 3"/>
+  ${T(300,26,"Up to face",A,9)}<rect x="300" y="40" width="45" height="40" stroke="${W}"/><path d="M360 30 v60" stroke="${R}"/>${T(366,64,"face",R,8)}
+  ${T(460,26,"Remove",A,9)}<rect x="450" y="40" width="60" height="40" stroke="${W}"/><circle cx="480" cy="60" r="10" stroke="${R}" stroke-dasharray="2 2"/>
+  ${T(30,150,"The same Extrude tool adds material or cuts pockets and holes.",G,9)}`),
+
+ revolve:S("0 0 560 210",`
+  <path d="M120 40 v120" stroke="${R}" stroke-dasharray="5 4"/>${T(96,36,"axis",R,8)}
+  <path d="M120 60 160 60 160 90 140 90 140 130 120 130Z" stroke="${A}" fill="${A}" fill-opacity=".06"/>${T(168,64,"half profile",A,8)}
+  <path d="M250 100 h60 M300 90 l12 10 -12 10" stroke="${W}"/>
+  <ellipse cx="430" cy="60" rx="55" ry="14" stroke="${W}"/><ellipse cx="430" cy="150" rx="35" ry="10" stroke="${W}"/>
+  <path d="M375 60 v78 M485 60 q10 45 -20 88 M395 90 h70" stroke="${W}"/>
+  ${T(60,195,"Revolve spins a profile around an axis — shafts, wheels, bosses.",G,9)}`),
+
+ tree:S("0 0 560 210",`
+  <rect x="30" y="20" width="180" height="170" stroke="${G}"/>
+  ${T(44,42,"▸ Sketch 1",W,9)}${T(44,64,"▸ Extrude 1",W,9)}${T(44,86,"▸ Fillet 1",A,9)}
+  <rect x="40" y="96" width="150" height="16" stroke="${A}" stroke-dasharray="3 3"/>${T(46,108,"◀ rollback here",A,8)}
+  ${T(44,134,"▸ Hole 1",G,9)}${T(44,156,"▸ Pattern 1",G,9)}
+  <path d="M240 105 h50 M280 95 l12 10 -12 10" stroke="${W}"/>
+  ${T(320,60,"Drag rollback UP to insert",W,9)}${T(320,80,"a feature earlier — the model",W,9)}${T(320,100,"rebuilds top-to-bottom.",W,9)}
+  ${T(320,140,"A red mark = a broken feature;",R,9)}${T(320,160,"fix the cause upstream first.",R,9)}`),
+
+ detail:S("0 0 560 210",`
+  ${T(40,26,"Fillet (round)",A,9)}<path d="M40 120 v-50 q0 -20 20 -20 h50" stroke="${W}"/><path d="M60 50 q-20 0 -20 20" stroke="${B}"/>
+  ${T(200,26,"Chamfer (bevel)",A,9)}<path d="M200 120 v-40 l25 -25 h45" stroke="${W}"/>
+  ${T(370,26,"Counterbore hole",A,9)}<path d="M380 60 h90 v70 h-90Z" stroke="${W}"/><path d="M405 60 v18 h40 v-18 M415 78 v52 h20 v-52" stroke="${B}"/>
+  ${T(40,160,"Shell → thin walls",A,9)}<rect x="40" y="168" width="70" height="30" stroke="${W}"/><rect x="46" y="174" width="58" height="24" stroke="${B}" stroke-dasharray="2 2"/>
+  ${T(200,175,"Detail features go LAST — they complicate selecting faces.",G,9)}`),
+
+ pattern:S("0 0 560 200",`
+  ${T(40,26,"Linear pattern",A,9)}
+  <rect x="40" y="40" width="20" height="20" stroke="${W}"/><rect x="80" y="40" width="20" height="20" stroke="${A}" stroke-dasharray="2 2"/><rect x="120" y="40" width="20" height="20" stroke="${A}" stroke-dasharray="2 2"/><rect x="160" y="40" width="20" height="20" stroke="${A}" stroke-dasharray="2 2"/>
+  ${T(40,120,"Circular pattern",A,9)}
+  <circle cx="120" cy="150" r="34" stroke="${G}"/>
+  <circle cx="120" cy="116" r="5" stroke="${W}"/><circle cx="150" cy="168" r="5" stroke="${A}" stroke-dasharray="2 2"/><circle cx="90" cy="168" r="5" stroke="${A}" stroke-dasharray="2 2"/>
+  ${T(260,90,"Pattern once, not by hand.",W,9)}${T(260,112,"Drive count & spacing with",W,9)}${T(260,134,"variables like #count.",W,9)}`),
+
+ mateConn:S("0 0 560 210",`
+  <rect x="60" y="60" width="120" height="90" stroke="${W}"/><path d="M180 105 h4" stroke="${A}"/>
+  <path d="M180 105 l20 0 M190 95 v20" stroke="${A}"/><circle cx="190" cy="105" r="4" fill="${A}" stroke="${A}"/>${T(150,50,"mate connector",A,8)}
+  <rect x="260" y="60" width="120" height="90" stroke="${W}"/><path d="M260 105 l-20 0 M250 95 v20" stroke="${A}"/><circle cx="250" cy="105" r="4" fill="${A}" stroke="${A}"/>
+  <path d="M196 105 h48" stroke="${B}" stroke-dasharray="4 3"/>${T(430,90,"Fastened mate",W,9)}${T(430,112,"aligns two connectors",W,9)}${T(430,134,"→ rigid, 0 DOF.",W,9)}`),
+
+ joints:S("0 0 560 200",`
+  ${T(50,28,"Revolute — 1 rotation",A,9)}
+  <rect x="50" y="45" width="80" height="24" stroke="${W}"/><circle cx="130" cy="57" r="6" fill="${A}" stroke="${A}"/>
+  <path d="M130 57 l55 -20" stroke="${W}"/><rect x="150" y="10" width="70" height="24" transform="rotate(-20 185 22)" stroke="${W}"/>
+  <path d="M150 90 a40 40 0 0 1 40 -30" stroke="${B}"/><path d="M150 90 l-4 -8 8 2" stroke="${B}"/>
+  ${T(330,28,"Slider — 1 translation",B,9)}
+  <rect x="330" y="50" width="180" height="18" stroke="${G}"/><rect x="360" y="52" width="40" height="14" stroke="${A}"/><path d="M410 59 h40 M442 53 l8 6 -8 6" stroke="${B}"/>
+  ${T(50,150,"Count the motion you want, then add exactly enough mates —",G,9)}${T(50,168,"leftover degrees of freedom cause floppy, unpredictable assemblies.",G,9)}`),
+
+ views:S("0 0 560 230",`
+  <rect x="30" y="30" width="500" height="180" stroke="${G}"/>
+  <rect x="55" y="55" width="70" height="50" stroke="${W}"/>${T(60,48,"FRONT",A,8)}
+  <rect x="160" y="55" width="50" height="50" stroke="${W}"/>${T(165,48,"RIGHT",A,8)}
+  <rect x="55" y="130" width="70" height="40" stroke="${W}"/>${T(60,124,"TOP",A,8)}
+  <path d="M300 60 360 60 360 120 300 120Z M300 60 330 45 390 45 360 60 M360 120 390 105 390 45" stroke="${W}"/>${T(300,140,"ISO",A,8)}
+  <path d="M55 190 h70" stroke="${B}"/><path d="M55 186 v8 M125 186 v8" stroke="${B}"/>${T(72,204,"80 ±0.1",B,8)}
+  <rect x="430" y="150" width="90" height="50" stroke="${A}"/>${T(438,168,"TITLE / BOM",A,8)}`),
+
+ exports:S("0 0 560 180",`
+  <path d="M270 30 240 60 h20 v40 h20 v-40 h20Z" stroke="${W}"/>${T(250,120,"your part",G,8)}
+  <path d="M270 60 h-120 M150 60 l0 40" stroke="${A}"/>${T(70,120,"STEP → CNC / CAD",A,9)}
+  <path d="M290 60 h130 M420 60 l0 40" stroke="${B}"/>${T(430,120,"STL → 3D print",B,9)}
+  <path d="M270 100 v40" stroke="${R}"/>${T(210,160,"DXF (flat face) → laser / router",R,9)}`),
+
+ config:S("0 0 560 170",`
+  <rect x="40" y="60" width="30" height="30" stroke="${W}"/>${T(40,110,"S",A,9)}
+  <rect x="120" y="50" width="48" height="48" stroke="${W}"/>${T(138,120,"M",A,9)}
+  <rect x="220" y="40" width="66" height="66" stroke="${W}"/>${T(248,124,"L",A,9)}
+  <rect x="360" y="45" width="170" height="70" stroke="${A}"/>${T(372,68,"config table",A,9)}${T(372,90,"size │ length │ holes",G,8)}
+  ${T(40,150,"One model → a whole family of sizes, selectable on insert.",G,9)}`),
+
+ cube:S("0 0 560 250",`
+  <path d="M150 70 330 70 330 210 150 210Z" stroke="${B}"/>
+  <path d="M150 70 220 30 400 30 330 70 M330 210 400 170 400 30" stroke="${B}"/>
+  <path d="M180 200 h120 v-90 h-120Z" stroke="${W}"/><circle cx="200" cy="200" r="10" stroke="${A}"/><circle cx="280" cy="200" r="10" stroke="${A}"/>
+  <path d="M420 210 v-140" stroke="${A}"/><path d="M416 76 l4 -6 4 6 M416 204 l4 6 4 -6" stroke="${A}"/>${T(430,145,'18"',A,10)}
+  ${T(150,240,"Model an 18-inch reference cube and design your robot inside it.",G,9)}`),
+
+ grid:S("0 0 560 200",`
+  <rect x="40" y="30" width="220" height="140" stroke="${G}"/>
+  ${[0,1,2,3,4,5].map(i=>`<circle cx="${70+i*30}" cy="60" r="3" fill="${A}" stroke="none"/><circle cx="${70+i*30}" cy="90" r="3" fill="${A}" stroke="none"/><circle cx="${70+i*30}" cy="120" r="3" fill="${A}" stroke="none"/><circle cx="${70+i*30}" cy="150" r="3" fill="${A}" stroke="none"/>`).join('')}
+  <path d="M70 60 h30" stroke="${B}"/>${T(74,54,"8mm",B,7)}<path d="M70 60 v30" stroke="${B}"/>
+  ${T(330,70,"Match your custom brackets",W,9)}${T(330,92,"to the goBILDA 8/32 mm grid",W,9)}${T(330,114,"(or REV 15 mm) exactly, or",W,9)}${T(330,136,"nothing bolts together.",R,9)}`),
+
+ mecanum:S("0 0 560 220",`
+  <rect x="180" y="70" width="200" height="90" stroke="${W}"/>
+  ${T(250,120,"drive base",G,9)}
+  <g stroke="${A}"><ellipse cx="180" cy="70" rx="26" ry="14" transform="rotate(45 180 70)"/></g>
+  <g stroke="${A}"><ellipse cx="380" cy="70" rx="26" ry="14" transform="rotate(-45 380 70)"/></g>
+  <g stroke="${A}"><ellipse cx="180" cy="160" rx="26" ry="14" transform="rotate(-45 180 160)"/></g>
+  <g stroke="${A}"><ellipse cx="380" cy="160" rx="26" ry="14" transform="rotate(45 380 160)"/></g>
+  ${T(150,205,"Mecanum roller angles form an X (bottom view) — required to strafe.",G,9)}`),
+
+ dfm:S("0 0 560 200",`
+  <rect x="60" y="50" width="120" height="70" stroke="${W}"/>
+  ${[0,1,2,3,4,5,6].map(i=>`<line x1="60" y1="${58+i*9}" x2="180" y2="${58+i*9}" stroke="${G}" stroke-width="1"/>`).join('')}
+  <path d="M120 120 v30" stroke="${B}"/>${T(90,170,"load ∥ layers ✓",A,9)}
+  <rect x="330" y="50" width="120" height="70" stroke="${W}"/>
+  ${[0,1,2,3,4,5,6,7,8,9,10,11].map(i=>`<line x1="${338+i*9}" y1="50" x2="${338+i*9}" y2="120" stroke="${G}" stroke-width="1"/>`).join('')}
+  <path d="M390 40 v-16" stroke="${R}"/>${T(360,150,"load ⟂ layers ✗",R,9)}
+  ${T(60,195,"Orient printed parts so loads run ALONG the layer lines, not across.",G,9)}`),
+
+ fourbar:S("0 0 560 200",`
+  <circle cx="120" cy="150" r="5" fill="${A}" stroke="${A}"/><circle cx="180" cy="150" r="5" fill="${A}" stroke="${A}"/>
+  <path d="M120 150 L150 60 M180 150 L210 60" stroke="${W}"/>
+  <path d="M150 60 L210 60" stroke="${B}"/>${T(150,50,"stays level",B,8)}
+  <path d="M300 150 L330 60 M360 150 L390 60 M330 60 L390 60" stroke="${G}" stroke-dasharray="3 3"/>
+  ${T(430,90,"A parallel four-bar keeps",W,9)}${T(430,112,"the end effector level",W,9)}${T(430,134,"through its whole travel.",W,9)}`),
+
+ tube:S("0 0 560 200",`
+  <rect x="60" y="60" width="150" height="75" stroke="${W}"/><rect x="66" y="66" width="138" height="63" stroke="${A}"/>
+  <path d="M60 150 h150" stroke="${B}"/><path d="M60 146 v8 M210 146 v8" stroke="${B}"/>${T(110,168,"2 in",B,8)}
+  <path d="M40 60 v75" stroke="${B}"/><path d="M36 60 v0 M36 66 l4 -6 4 6" stroke="${B}"/>${T(20,100,"1 in",B,8)}
+  ${T(240,80,"2×1 tube, 1/16\" wall.",W,9)}${T(240,102,"Use the real wall thickness",W,9)}${T(240,124,"or your weight estimate lies.",R,9)}`),
+
+ frame:S("0 0 560 220",`
+  <rect x="70" y="50" width="260" height="120" stroke="${A}"/>
+  <rect x="78" y="58" width="244" height="104" stroke="${G}" stroke-dasharray="3 3"/>
+  <circle cx="70" cy="170" r="14" stroke="${B}"/><circle cx="330" cy="170" r="14" stroke="${B}"/><circle cx="70" cy="50" r="14" stroke="${B}"/><circle cx="330" cy="50" r="14" stroke="${B}"/>
+  ${T(120,115,"master sketch drives it",G,9)}
+  ${T(400,90,"Move one sketch line →",W,9)}${T(400,112,"the whole frame resizes.",W,9)}${T(400,134,"That's top-down design.",A,9)}`),
+
+ gusset:S("0 0 560 200",`
+  <rect x="50" y="90" width="150" height="26" stroke="${W}"/>
+  <rect x="150" y="40" width="26" height="120" stroke="${W}"/>
+  <path d="M176 90 L260 90 176 40Z" stroke="${A}" fill="${A}" fill-opacity=".06"/>
+  <circle cx="196" cy="76" r="3" fill="${B}" stroke="none"/><circle cx="212" cy="68" r="3" fill="${B}" stroke="none"/><circle cx="196" cy="60" r="3" fill="${B}" stroke="none"/>
+  ${T(300,80,"A gusset ties tubes together.",W,9)}${T(300,102,"Bolt holes sit on the 1\" / 0.5\"",W,9)}${T(300,124,"grid — pull them from the",W,9)}${T(300,146,"COTS part, don't guess.",R,9)}`),
+
+ swerve:S("0 0 560 230",`
+  <rect x="200" y="30" width="120" height="40" stroke="${W}"/>${T(214,55,"top plate",G,8)}
+  <rect x="210" y="80" width="100" height="18" stroke="${A}"/>${T(224,94,"gears / belt",A,8)}
+  <circle cx="260" cy="160" r="45" stroke="${W}"/><circle cx="260" cy="160" r="14" stroke="${A}"/>
+  <path d="M215 160 h90" stroke="${G}" stroke-dasharray="3 3"/>
+  <path d="M380 90 v70" stroke="${B}"/><path d="M376 96 l4 -6 4 6 M376 154 l4 6 4 -6" stroke="${B}"/>${T(392,130,"module",B,9)}
+  ${T(150,215,"COTS swerve module (MK4i/SDS): steer on top, wheel below.",G,9)}`),
+
+ bumper:S("0 0 560 190",`
+  <rect x="120" y="50" width="200" height="90" stroke="${W}"/>${T(190,100,"frame perimeter",G,8)}
+  <rect x="110" y="40" width="220" height="110" stroke="${R}" stroke-width="3"/>${T(340,60,"bumper wraps",R,9)}${T(340,82,"the perimeter",R,9)}
+  ${T(120,175,"Bumpers must cover the frame corners and swap fast between matches.",G,9)}`),
+
+ motorCurve:S("0 0 560 220",`
+  <path d="M60 180 H500 M60 180 V30" stroke="${G}"/>
+  ${T(20,110,"τ",A,12)}${T(500,196,"speed",G,9)}${T(40,40,"stall",R,8)}${T(470,175,"free",A,8)}
+  <path d="M70 50 L470 175" stroke="${A}"/>
+  <path d="M70 180 Q270 60 470 180" stroke="${B}" stroke-dasharray="4 3"/>${T(250,90,"power",B,8)}
+  ${T(90,205,"Torque falls as speed rises; peak power is in the middle. Design for stall.",G,9)}`),
+
+ belt:S("0 0 560 190",`
+  <circle cx="140" cy="95" r="45" stroke="${W}"/><circle cx="380" cy="95" r="28" stroke="${W}"/>
+  <path d="M140 50 H380 M140 140 H380" stroke="${A}"/>
+  <circle cx="260" cy="150" r="14" stroke="${B}"/>${T(240,182,"tensioner",B,8)}
+  ${T(120,30,"driver",G,8)}${T(360,50,"driven",G,8)}
+  ${T(430,90,"Tension every belt/chain",W,9)}${T(430,112,"run; slack = skipped teeth",R,9)}${T(430,134,"and backlash.",R,9)}`),
+
+ elevator:S("0 0 560 230",`
+  <rect x="180" y="30" width="40" height="170" stroke="${G}"/><rect x="240" y="30" width="40" height="170" stroke="${G}"/>
+  <rect x="185" y="60" width="30" height="40" stroke="${A}"/><rect x="245" y="110" width="30" height="40" stroke="${A}"/>
+  <path d="M200 200 v-140 M260 60 v140" stroke="${B}" stroke-dasharray="4 3"/>
+  ${T(300,70,"Cascade elevator: bearing",W,9)}${T(300,92,"blocks ride in the tubes,",W,9)}${T(300,114,"rigging lifts each stage,",W,9)}${T(300,136,"hard stops cap the travel.",W,9)}`),
+};
+
+/* =========================================================================
+   COURSE CONTENT
+   fig(key) / step / note(type,text)
+   ========================================================================= */
+const YT='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 5 12 5 12 5s-7 0-8.9.4A3 3 0 0 0 1 7.5 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1C5 19 12 19 12 19s7 0 8.9-.4a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-4.5 31 31 0 0 0-.4-4.5ZM9.8 15.3V8.7l5.7 3.3Z"/></svg>';
+const LK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
+
+const COURSE=[
+ {id:"fund", n:"01", title:"Onshape Fundamentals", units:[
+   {title:"Getting Started", lessons:[
+     {id:"f-ui", title:"The Onshape interface & cloud model", min:12, intro:"Onshape runs entirely in your browser — nothing to install, and your work saves continuously. Before you model anything, get comfortable with the window and the way Onshape stores your data, because it's unlike any file-based CAD you may have seen.",
+      sec:[
+        {h:"Tour the window", x:"1", fig:"interface", body:"Every Onshape document is a set of <b>tabs</b> along the bottom. The three you'll use constantly are <b>Part Studios</b> (model parts), <b>Assemblies</b> (mate parts together), and <b>Drawings</b> (dimension for manufacturing). The toolbar at the top changes to match whichever tab is open. On the left is the <b>Feature list</b> — the ordered recipe that builds your part. The big area in the middle is the graphics area where your model lives.",
+         steps:["Go to <code>onshape.com</code> and create a free <b>Education</b> or <b>Maker</b> account.","Click <b>Create → Document</b> and give it a name.","Add a Part Studio, an Assembly, and a Drawing tab so you've seen all three.","Practice the camera: <b>right-drag</b> to orbit, <b>Ctrl/⌘-drag</b> to pan, <b>scroll</b> to zoom."]},
+        {h:"The cloud data model", x:"2", body:"There is no Save button. A <b>workspace</b> is your live editing area; a <b>version</b> is a permanent snapshot you can always return to; a <b>branch</b> lets you try a change without touching the main design. This is why you can't lose work and why a whole team can edit the same document at once.",
+         steps:["Make any edit, then open <b>Versions &amp; history</b> (the clock icon).","Create a <b>version</b> and name it clearly, e.g. <code>v1 — base frame</code>.","Right-click that version and <b>branch</b> from it to experiment safely.","Use <b>Compare</b> to see exactly what changed between two versions."]},
+      ],
+      notes:[["tip","Take a named version before any big change — it's your instant, permanent undo point."]],
+      take:["Onshape is browser-based and auto-saving.","Documents hold Part Studio, Assembly, and Drawing tabs.","Versions and branches let you experiment without ever losing work."],
+      res:[["Onshape Learning Center","https://learn.onshape.com/",false],["Onshape on YouTube","https://www.youtube.com/@Onshape",true]]},
+   ]},
+   {title:"Sketching", lessons:[
+     {id:"f-sketch", title:"Your first sketch: planes & tools", min:14, intro:"Every 3D feature starts as a 2D sketch on a flat plane. Sketching well is the single most important CAD skill — a clean sketch makes everything downstream easy; a messy one causes problems you'll fight for hours.",
+      sec:[
+        {h:"Choose a plane", x:"1", fig:"planes", body:"Onshape gives you three default planes — <b>Top</b>, <b>Front</b>, and <b>Right</b> — that meet at the <b>origin</b>. You can also sketch on any flat face of an existing part. Pick the plane that matches how you'll think about the part (usually Front for a profile you'll extrude toward you).",
+         steps:["Click <b>Sketch</b>, then click the <b>Front</b> plane.","The view snaps flat to the plane — you're now drawing in 2D.","Anchor your first geometry to the <b>origin</b> so the part stays put."]},
+        {h:"Draw the geometry", x:"2", fig:"sketchDraw", body:"Use <b>line</b>, <b>rectangle</b>, <b>circle</b>, <b>arc</b>, and <b>spline</b> to lay out the shape. Draw roughly to size — you'll pin exact dimensions in the next lesson. Keep each sketch to one feature's worth of geometry.",
+         steps:["Draw a <b>rectangle</b> starting near the origin.","Add a <b>circle</b> for a hole or boss.","Press <b>Esc</b> to drop the tool; press it again to leave the tool active for another shape."]},
+      ],
+      notes:[["note","Model one feature's worth of geometry per sketch. Cramming a whole part into one giant sketch makes it fragile and hard to edit."],["warn","Don't leave gaps — an open profile can't be extruded into a solid. Use the <b>Sketch</b> panel's warning to spot open loops."]],
+      take:["Sketches live on planes or flat faces.","Anchor to the origin to keep the model stable.","Draw roughly; dimension precisely afterward."],
+      res:[["Onshape Learning Center","https://learn.onshape.com/",false]]},
+     {id:"f-constraints", title:"Constraints & dimensions: fully defining", min:12, intro:"A sketch is 'fully defined' when every point is locked in place — Onshape colors it black. Anything still free is blue, and blue geometry will move on you when you least expect it. Your goal is black on every sketch.",
+      sec:[
+        {h:"Constrain, then dimension", x:"1", fig:"constraints", body:"<b>Constraints</b> describe relationships — coincident, parallel, perpendicular, tangent, <b>equal</b>, symmetric, horizontal/vertical. <b>Dimensions</b> set actual numbers. Add constraints first (they remove lots of freedom cheaply), then add just enough dimensions to lock the rest.",
+         steps:["Add <b>horizontal</b>/<b>vertical</b> constraints to straighten lines.","Use <b>equal</b> to make two edges match with a single constraint.","Add <b>symmetric</b> about the origin so the part stays centered.","Dimension the remaining unknowns until the sketch turns <b>black</b>."]},
+      ],
+      notes:[["tip","If a sketch won't go fully defined, look for a blue point you can drag — wherever it moves is the freedom you still need to pin."],["warn","Never over-constrain. If Onshape warns of conflicting constraints, remove one rather than forcing a dimension."]],
+      take:["Blue = under-defined (can move); black = fully defined.","Constraints are cheaper than dimensions — use them first.","Fully define every sketch before building on it."],
+      res:[["Onshape on YouTube","https://www.youtube.com/@Onshape",true]]},
+   ]},
+   {title:"Part features", lessons:[
+     {id:"f-extrude", title:"Extrude & end conditions", min:12, intro:"Extrude is the workhorse of solid modeling: it pushes a 2D sketch into the third dimension to add material, or pulls it through a solid to cut a pocket or hole.",
+      sec:[
+        {h:"Add material", x:"1", fig:"extrude", body:"Select a closed sketch region and choose <b>Extrude</b>. Drag the arrow or type a depth. The same tool has an <b>Add</b> mode (new solid) and a <b>Remove</b> mode (cut).",
+         steps:["Select a closed region and click <b>Extrude</b>.","Set a <b>blind</b> depth, then try <b>Symmetric</b> to grow both ways.","Sketch a circle on a face and <b>Extrude → Remove</b> to cut a hole.","Rename the feature in the tree, e.g. <code>Base plate</code>."]},
+        {h:"End conditions", x:"2", fig:"endconditions", body:"Beyond blind depth, use <b>Up to face</b>, <b>Up to part</b>, or <b>Through all</b> so the feature adapts if the model changes — far more robust than a hard-coded number.",
+         steps:["Try <b>Up to face</b> on a cut so it always reaches the far wall.","Use <b>Through all</b> for bolt holes that must fully pierce the part."]},
+      ],
+      notes:[["tip","Name features as you go ('Bolt holes', 'Lightening pockets'). A tree that reads like a recipe is a gift to your future self and teammates."]],
+      take:["Extrude adds or removes material from a sketch region.","End conditions like 'up to face' keep features robust to change.","Name every feature."],
+      res:[["Onshape Learning Center","https://learn.onshape.com/",false]]},
+     {id:"f-revolve", title:"Revolve & reading the feature tree", min:10, intro:"Revolve spins a profile around an axis to make anything cylindrical — shafts, wheels, spacers, bosses. It's also the perfect moment to understand how the feature tree rebuilds.",
+      sec:[
+        {h:"Revolve a profile", x:"1", fig:"revolve", body:"Sketch a <b>half-profile</b> and a <b>centerline</b> to act as the axis, then Revolve, usually 360°.",
+         steps:["Sketch the half-profile of a stepped shaft plus a centerline axis.","Click <b>Revolve</b>, pick the axis, and set 360°.","Add a <b>chamfer</b> to the shaft ends for assembly lead-in."]},
+        {h:"The rollback bar", x:"2", fig:"tree", body:"The feature list runs top-to-bottom. Drag the <b>rollback bar</b> up to step back in time, insert a feature earlier, then roll forward and watch everything rebuild in order.",
+         steps:["Drag the rollback bar above a feature.","Edit an earlier sketch and roll forward to see changes propagate.","If a feature turns red, fix the <b>cause</b> upstream, not the symptom."]},
+      ],
+      notes:[["note","Order matters. Features only 'see' geometry created before them, which is why a broken feature is usually fixed by editing something earlier in the tree."]],
+      take:["Revolve builds cylindrical geometry from a profile + axis.","The tree rebuilds top-to-bottom; rollback lets you edit history.","Fix broken features upstream."],
+      res:[["Onshape on YouTube","https://www.youtube.com/@Onshape",true]]},
+   ]},
+   {title:"Detailing & reuse", lessons:[
+     {id:"f-detail", title:"Fillets, chamfers, holes & shell", min:12, intro:"These are the details that turn a rough block into a real, manufacturable part — stronger, safer, and ready to assemble.",
+      sec:[
+        {h:"Round, bevel, bore, hollow", x:"1", fig:"detail", body:"<b>Fillets</b> round edges (strength + safety), <b>chamfers</b> bevel them (assembly lead-ins, deburring). The <b>Hole</b> tool is smarter than a cut — it understands clearance, tapped, counterbore, and countersink holes. <b>Shell</b> hollows a solid to a wall thickness for printed parts.",
+         steps:["Add a 2–3 mm <b>fillet</b> to load-bearing edges.","Add a 45° <b>chamfer</b> to a hole's lead-in edge.","Use the <b>Hole</b> tool for a counterbored M3 bolt hole.","<b>Shell</b> an enclosure to 2 mm walls, removing the top face."]},
+        {h:"Patterns & variables", x:"2", fig:"pattern", body:"Never place repeated features by hand. <b>Linear</b>, <b>circular</b>, and <b>mirror</b> patterns copy a feature cleanly, and <b>variables</b> like <code>#count</code> or <code>#width</code> let one number drive many dimensions.",
+         steps:["Pattern a vent-slot array with a <b>linear pattern</b>.","Put a bolt circle on a <b>circular pattern</b>.","Define <code>#width</code> and reference it in several dimensions."]},
+      ],
+      notes:[["tip","Add fillets and chamfers LAST. They turn edges into curved faces that are harder to select for earlier features."],["warn","Walls thinner than ~1.2 mm print poorly on FDM. Keep structural walls thicker."]],
+      take:["Fillet/chamfer/hole/shell make parts manufacturable.","Patterns and variables keep repeated geometry clean and editable.","Detail features go last."],
+      res:[["Onshape Learning Center","https://learn.onshape.com/",false]]},
+     {id:"f-config", title:"Configurations & part libraries", min:10, intro:"Once you can model a part, make it reusable. Configurations turn a part into a size family; a library keeps purchased and common parts in one place.",
+      sec:[
+        {h:"Configure a family", x:"1", fig:"config", body:"A <b>configuration</b> turns inputs (length, hole count, variant) into a selectable table, so one bracket serves every size you need.",
+         steps:["Add a configuration input such as <b>length</b>.","Build a config table with a few sizes.","Insert different configurations into an assembly to confirm they swap."]},
+        {h:"Build a team library", x:"2", body:"Keep COTS parts and your own reusable parts in a dedicated <b>library document</b>, then insert them everywhere. Updates propagate, and every project stays consistent. This is also your first taste of <b>FeatureScript</b>, Onshape's language for custom features.",
+         steps:["Create a <code>Team Library</code> document.","Import vendor STEP files into it, one tab per vendor.","Insert library parts via <b>Insert → from other document</b>."]},
+      ],
+      notes:[["note","Configure a part once instead of modeling it in three sizes. The time you save compounds across a whole robot."]],
+      take:["Configurations create size families from one model.","A library document keeps COTS + common parts consistent.","FeatureScript powers custom, reusable features."],
+      res:[["Onshape Learning Center","https://learn.onshape.com/",false]]},
+   ]},
+   {title:"Assemblies & drawings", lessons:[
+     {id:"f-mates", title:"Assemblies: mate connectors & joints", min:14, intro:"An Assembly brings parts together and defines how they connect and move. Onshape's mates are built on Mate Connectors — small coordinate frames you place on geometry — which makes assembling fast and predictable once it clicks.",
+      sec:[
+        {h:"Fasten parts together", x:"1", fig:"mateConn", body:"Insert parts (the first one grounds automatically). Place a <b>Mate Connector</b> on each part where they should meet, then a <b>Fastened</b> mate locks them rigidly (0 degrees of freedom).",
+         steps:["Create an Assembly and <b>insert</b> your base part.","Insert a second part.","Place mate connectors on the mating faces of each.","Apply a <b>Fastened</b> mate to lock them together."]},
+        {h:"Add motion", x:"2", fig:"joints", body:"For moving mechanisms use a <b>Revolute</b> mate (one rotation — hinge, wheel), a <b>Slider</b> (one translation — linear slide), or Cylindrical/Planar/Ball. After mating, grab and drag to test the motion.",
+         steps:["Add a <b>Revolute</b> mate to a hinge or wheel axle.","Drag the part to confirm it rotates and nothing else moves.","Group repeated parts into <b>sub-assemblies</b> to stay organized."]},
+      ],
+      notes:[["tip","Good mate-connector placement is 90% of a clean assembly. Put connectors on real, meaningful geometry (hole centers, face centers), not random points."],["warn","Leftover degrees of freedom make floppy assemblies. Add exactly enough mates — no more, no less."]],
+      take:["Mate connectors are the foundation of Onshape assemblies.","Fastened = rigid; revolute/slider add controlled motion.","Sub-assemblies keep big robots manageable."],
+      res:[["Onshape on YouTube","https://www.youtube.com/@Onshape",true]]},
+     {id:"f-drawings", title:"Drawings & data export", min:12, intro:"A drawing turns your 3D model into a manufacturable 2D document, and exports hand your geometry to the machine that will make it. Even in a print-and-CNC world, a clear drawing prevents costly mistakes.",
+      sec:[
+        {h:"Make a drawing", x:"1", fig:"views", body:"Create a Drawing, place standard <b>views</b> (front/top/right/iso), then add <b>section</b> and <b>detail</b> views, dimensions, a title block, and a BOM.",
+         steps:["Create a <b>Drawing</b> from your part or assembly.","Place front, top, right, and isometric views.","Dimension the features the machinist must hit — and only those.","Add tolerances where they matter; insert a <b>BOM</b> for assemblies."]},
+        {h:"Export for manufacturing", x:"2", fig:"exports", body:"Different processes want different files: <b>STEP</b> for CNC/CAD exchange, <b>STL</b> for 3D printing, and <b>DXF</b> for laser cutters and routers (right-click a flat face → Export as DXF).",
+         steps:["Right-click a part → <b>Export → STEP</b> for machining.","Export <b>STL</b> at fine resolution for printing.","Right-click a flat face → <b>Export as DXF</b> for the laser."]},
+      ],
+      notes:[["warn","Always confirm units (mm vs in) before sending a file to a machine, and sanity-check DXFs in the cutter's software — kerf and scale bite here."]],
+      take:["Drawings communicate manufacturing intent with views + dimensions.","Dimension what the machinist needs, not every edge.","STEP → CNC, STL → print, DXF → laser/router."],
+      res:[["Onshape Learning Center","https://learn.onshape.com/",false]]},
+   ]},
+ ]},
+
+ {id:"ftc", n:"02", title:"FTC CAD", units:[
+   {title:"Rules & the ecosystem", lessons:[
+     {id:"t-cube", title:"The 18-inch cube & the layout sketch", min:12, intro:"An FTC robot must start inside an 18\"×18\"×18\" cube. The easiest way to stay legal is to design inside a reference cube from the very first sketch, driven by a single master layout.",
+      sec:[
+        {h:"Design inside the cube", x:"1", fig:"cube", body:"Build an 18\" reference cube and keep every mechanism's <b>stowed</b> pose inside it. Budget weight, the control hub, battery, and wiring early — they all compete for the same volume.",
+         steps:["Model an 18\" reference cube as a visual body.","Read the season game manual for expansion and mechanism rules.","Sketch a top-down layout of the drivetrain and subsystem footprints.","Reserve space for the hub, battery, and wire runs."]},
+        {h:"Drive everything from a master sketch", x:"2", fig:"frame", body:"A single layout sketch capturing wheelbase and track width becomes your source of truth — the same top-down method FRC teams use, scaled to FTC.",
+         steps:["Create a layout sketch on the robot's centerplane.","Define wheelbase and track width as variables.","Reference parts to the sketch so one change updates the robot."]},
+      ],
+      notes:[["warn","Check that the robot fits the cube with mechanisms retracted, not just the drivetrain. A stowed intake that pokes out 1\" is illegal."]],
+      take:["FTC robots start inside an 18\" cube.","A reference cube keeps you legal as you design.","A master layout sketch drives the whole robot."],
+      res:[["goBILDA (CAD & parts)","https://www.gobilda.com/",false]]},
+     {id:"t-vendor", title:"Vendor libraries: goBILDA & REV", min:12, intro:"FTC is built on a few standard hole patterns. Match them exactly and everything bolts together; miss by half a millimeter and nothing does.",
+      sec:[
+        {h:"Learn the grid", x:"1", fig:"grid", body:"goBILDA uses an <b>8 mm</b> and <b>32 mm</b> pattern on channel and hubs; REV uses a <b>15 mm</b> extrusion system. Recreate the pattern as a reusable sketch and match every custom hole to it.",
+         steps:["Study the goBILDA 8/32 mm pattern and channel dimensions.","Study the REV 15 mm extrusion pattern.","Recreate a grid as a reusable sketch you can pattern from."]},
+        {h:"Import, don't re-model", x:"2", body:"Download official vendor STEP files into a COTS library document. Your CAD then matches what you'll actually build, so weight and clearance are real.",
+         steps:["Download STEP files for motors, channel, wheels, and hubs.","Import them into a <code>COTS Library</code> document.","Insert from the library into your robot assembly."]},
+      ],
+      notes:[["tip","Never model a goBILDA part from scratch — the official STEP is exact, free, and updates when the vendor changes it."]],
+      take:["goBILDA = 8/32 mm grid; REV = 15 mm extrusion.","Match custom holes to the vendor grid exactly.","Import COTS STEP files instead of modeling them."],
+      res:[["goBILDA (CAD & parts)","https://www.gobilda.com/",false]]},
+   ]},
+   {title:"Drivetrain & custom parts", lessons:[
+     {id:"t-drive", title:"Designing a mecanum drivetrain", min:14, intro:"The drivetrain is the foundation every other subsystem hangs off. Pick a type for the game, then build a legal, buildable base.",
+      sec:[
+        {h:"Pick a drivetrain", x:"1", body:"<b>Tank</b> is simple and robust; <b>mecanum</b> adds strafing at some efficiency cost; <b>X-drive</b> is nimble but harder to build. Choose based on whether the game rewards strafing to align with scoring elements.",
+         steps:["List the game's driving demands (strafe? push? speed?).","Pick a type and a target free speed.","Choose motors and a gear/belt reduction for that speed."]},
+        {h:"Build the base", x:"2", fig:"mecanum", body:"Mount motors to channel, support each axle in bearings, and set consistent wheel spacing and ground clearance. Make the frame width follow the wheels via your layout sketch, and orient mecanum rollers into the correct X.",
+         steps:["Place four mecanum wheels with correct roller orientation.","Mount motors and hubs to channel using the vendor grid.","Add bearing support at each axle (dead axle preferred).","Verify ground clearance and cube fit."]},
+      ],
+      notes:[["warn","Mecanum rollers must form an X viewed from below, or the robot won't strafe. This is the most common rookie mistake."],["tip","More speed means less torque — size the reduction for pushing and acceleration, not top speed alone."]],
+      take:["Choose the drivetrain for the game's demands.","Mount to the vendor grid with proper bearing support.","Mecanum rollers must form an X to strafe."],
+      res:[["Onshape on YouTube","https://www.youtube.com/@Onshape",true]]},
+     {id:"t-dfm", title:"Custom brackets: printing & laser cutting", min:12, intro:"Custom parts tie the COTS together. Design them for how they'll be made — printed or laser-cut — from the start.",
+      sec:[
+        {h:"Design for 3D printing", x:"1", fig:"dfm", body:"FDM prints are weak across the layer lines. Orient parts so loads run <b>along</b> the layers, keep walls ≥ 2 mm, add fillets at stress risers, and leave ~0.2 mm clearance for press fits.",
+         steps:["Match mounting holes to the goBILDA/REV grid.","Keep structural walls ≥ 2 mm; fillet inside corners.","Orient the part so layer lines don't split under load.","Export a fine-resolution STL."]},
+        {h:"Design for laser cut", x:"2", fig:"exports", body:"Flat plate parts are fast and strong. Design them flat, account for laser <b>kerf</b>, and use <b>tab-and-slot</b> joints to locate mating parts without measuring. Export the outline as DXF from the flat face.",
+         steps:["Model the plate flat with the vendor hole pattern.","Add tab-and-slot features to locate mating plates.","Right-click the face → <b>Export as DXF</b> for the cutter."]},
+      ],
+      notes:[["tip","Cut one test plate first to dial in kerf before committing the whole set of parts."]],
+      take:["Orient printed parts so loads run along the layers.","Laser plates: design flat, account for kerf, use tab-and-slot.","Export STL for print, DXF for laser."],
+      res:[["Onshape Learning Center","https://learn.onshape.com/",false]]},
+   ]},
+   {title:"Mechanisms & integration", lessons:[
+     {id:"t-mech", title:"Intakes, slides & virtual four-bars", min:13, intro:"Game-piece subsystems win matches. The archetypes are linear slides, roller intakes, and arms — and the four-bar trick that keeps an end effector level.",
+      sec:[
+        {h:"Intakes & slides", x:"1", body:"Mount linear/viper slides square and well-supported, and set intake wheel <b>compression</b> so it grips without stalling. Always check the retracted state fits the cube.",
+         steps:["Mount slides to channel and rig them (belt or cord).","Design a compliant-wheel roller intake with correct compression.","Choose servo vs. motor actuation for the load."]},
+        {h:"Arms & four-bars", x:"2", fig:"fourbar", body:"A simple arm swings on a pivot; a <b>virtual four-bar</b> keeps the end effector level as it moves — ideal for depositing game pieces at a consistent angle.",
+         steps:["Model an arm on a dead-axle pivot.","Add a parallel four-bar if the payload must stay level.","Size the gearbox for holding torque at full extension."]},
+      ],
+      notes:[["warn","Compute torque at the worst case — arm fully extended, holding the heaviest game piece — not the average."]],
+      take:["Slides and roller intakes are the core game-piece tools.","A four-bar keeps the end effector level.","Size mechanisms for worst-case torque."],
+      res:[["Onshape on YouTube","https://www.youtube.com/@Onshape",true]]},
+     {id:"t-robot", title:"Full-robot assembly & handoff", min:11, intro:"Bring the subsystems together and hand the build team something they can actually make.",
+      sec:[
+        {h:"Integrate & check legality", x:"1", body:"Assemble every subsystem into one top-level robot, then check the things that lose matches: interferences, cable routing, and cube fit.",
+         steps:["Insert each subsystem sub-assembly into the robot assembly.","Run interference detection and fix collisions in every pose.","Route wiring and reserve battery space.","Confirm the stowed robot fits the 18\" cube."]},
+        {h:"BOM & handoff", x:"2", body:"Generate a bill of materials, produce the cut/print list, version the CAD, and share a public link for reviews.",
+         steps:["Generate a <b>BOM</b> from the top-level assembly.","Export the DXF/STL pack for custom parts.","Take a named version as the build baseline and share a link."]},
+      ],
+      notes:[["tip","Version the CAD the moment the build starts. Any mid-build change needs a paper trail so mechanical and programming stay in sync."]],
+      take:["Integrate subsystems and check interferences in every pose.","Confirm cube fit before building.","BOM + versioned link = a clean handoff."],
+      res:[["Onshape Learning Center","https://learn.onshape.com/",false]]},
+   ]},
+ ]},
+
+ {id:"frc", n:"03", title:"FRC CAD", units:[
+   {title:"Setup & frame (Stage 1)", lessons:[
+     {id:"r-setup", title:"Course setup: performance & libraries", min:10, intro:"FRC assemblies get big — hundreds of parts — so set Onshape up for it before you start. This mirrors FRCDesign.org's Course Setup.",
+      sec:[
+        {h:"Prepare your environment", x:"1", body:"Turn on performance-friendly settings, learn to work in sub-assemblies, and install a <b>COTS library</b> (like MKCad) so you insert real vendor parts instead of modeling them. Add the common custom features FRC teams rely on.",
+         steps:["Adjust graphics/performance settings for large assemblies.","Install a COTS library (e.g. MKCad) and vendor libraries.","Add common custom features (tube, gusset, pocketing helpers).","Set up a clean folder structure for the season."]},
+      ],
+      notes:[["tip","CAD is a motor skill — work the exercises in order and rebuild anything that felt slow. The second build is where it sticks."]],
+      take:["FRC robots are large — configure Onshape for performance.","Insert COTS from a library instead of modeling it.","Practice deliberately, in order."],
+      res:[["FRCDesign — Learning Course","https://frcdesign.org/learning-course/",false]]},
+     {id:"r-frame", title:"Building a tube frame from a master sketch", min:16, intro:"Stage 1 of FRCDesign builds the structural backbone: a drivetrain frame from 2×1 tube, driven entirely by one master sketch.",
+      sec:[
+        {h:"Model tubes", x:"1", fig:"tube", body:"FRC frames are mostly <b>2×1</b> and <b>1×1</b> tube with a real <b>1/16\" wall</b>. Model tubes as clean, named features and trim them to length rather than modeling each as a lonely extrude.",
+         steps:["Work Exercise 0 (navigation) to get fast at the interface.","Model a 2×1 tube with the correct wall thickness.","Add and trim more tubes to length."]},
+        {h:"Drive the frame from a sketch", x:"2", fig:"frame", body:"A master sketch defines the frame perimeter and drives every tube. Build the drivetrain, box, and triangle frames — each teaches a cleaner, more parametric way to generate structure.",
+         steps:["Sketch the frame perimeter and bumper zone.","Generate the drivetrain frame from the sketch.","Build the box frame, then the triangle frame.","Confirm moving one sketch line resizes the whole frame."]},
+      ],
+      notes:[["warn","Use the real 1/16\" wall thickness. A solid or wrong-wall tube throws off your entire weight budget."],["note","If moving a sketch line doesn't resize the frame, your tubes aren't truly sketch-driven — rebuild them referencing the master sketch."]],
+      take:["FRC structure is 2×1 tube with a 1/16\" wall.","A master sketch drives the whole frame (top-down design).","Work the Stage 1 exercises in order."],
+      res:[["FRCDesign — Learning Course","https://frcdesign.org/learning-course/",false]]},
+   ]},
+   {title:"Plates & gussets (Stage 2)", lessons:[
+     {id:"r-plate", title:"The plate workflow & gussets", min:14, intro:"Plates and gussets tie tubes together and mount mechanisms. FRCDesign's plate workflow builds them in-context so they always fit.",
+      sec:[
+        {h:"Build plates in-context", x:"1", fig:"gusset", body:"Create a plate <b>in-context</b> off existing tube faces, on the standard <b>1\" / 0.5\"</b> hole grid, with lightening pockets where loads allow. In-context means the plate updates automatically when the frame changes.",
+         steps:["Create a plate in-context off the tube faces.","Lay holes on the 1\" / 0.5\" grid.","Add lightening pockets where structure allows.","Keep the plate associative to the frame."]},
+        {h:"Gussets & motor mounts", x:"2", fig:"gusset", body:"Gussets reinforce tube joints; motor mounts locate gearboxes precisely. Pull the bolt circle and bearing bore straight from the COTS part.",
+         steps:["Model a gusset joining two tubes.","Add superstructure gussets and a plate.","Mount a motor/gearbox with the correct bolt pattern and bore."]},
+      ],
+      notes:[["warn","Pull the gearbox's bolt circle from its official CAD. Guessed hole patterns never line up, and you find out at the machine."]],
+      take:["Design plates in-context so they track the frame.","Use the 1\"/0.5\" grid and lighten where you can.","Copy COTS bolt patterns exactly."],
+      res:[["FRCDesign — Plate workflow","https://frcdesign.org/learning-course/",false]]},
+   ]},
+   {title:"Swerve & robot (Stages 3–4)", lessons:[
+     {id:"r-swerve", title:"COTS swerve & finishing the frame", min:14, intro:"Modern FRC drivetrains are usually COTS swerve modules. Stage 3 mounts them and finishes the frame into a complete sub-assembly.",
+      sec:[
+        {h:"Mount swerve modules", x:"1", fig:"swerve", body:"Insert a COTS module (MK4/MK4i, SDS) and study its mounting pattern. Learn the <b>rivet</b> workflow that real frames use, and place four modules at the frame corners.",
+         steps:["Learn the rivet workflow.","Insert a COTS swerve module and study its bolt pattern.","Place four modules at the frame corners.","Check module-to-bumper clearance early."]},
+        {h:"Belly pan & finish", x:"2", fig:"frame", body:"Add and pocket a <b>belly pan</b> — the floor plate that ties the drivetrain together and mounts electronics — then finish the frame details.",
+         steps:["Complete the full frame.","Add and heavily pocket a belly pan.","Finish fasteners and confirm one clean drivetrain sub-assembly."]},
+      ],
+      notes:[["tip","Pocket the belly pan aggressively — it's a big flat plate and one of the easiest large weight savings on the robot."]],
+      take:["Use COTS swerve modules and copy their mounting pattern.","Check bumper clearance before committing.","A pocketed belly pan saves easy weight."],
+      res:[["FRCDesign — Swerve","https://frcdesign.org/learning-course/",false]]},
+     {id:"r-robot", title:"Assembly, electronics & bumpers", min:13, intro:"Stage 4 brings the robot together with the battery, electronics, and rule-legal bumpers.",
+      sec:[
+        {h:"Top-level assembly", x:"1", body:"Insert subsystems into the top-level robot, then place the <b>battery</b> and electrical board. These drive your center of gravity and wiring, so treat them as real design problems.",
+         steps:["Insert subsystems into the top-level assembly.","Design a battery holder and mount it low.","Lay out and mount the electronics board.","Keep the CG low and central."]},
+        {h:"Bumpers", x:"2", fig:"bumper", body:"Design bumpers to the game's rules — they wrap the frame perimeter and meet size/coverage requirements — with a mount the pit crew can swap fast.",
+         steps:["Pocket the belly pan for weight.","Design rule-legal bumpers around the frame perimeter.","Design a tool-free, fast bumper mount.","Do a final interference and ~125 lb weight check."]},
+      ],
+      notes:[["tip","Mount the battery as low as possible — it's the single heaviest component and sets your center of gravity."],["warn","Bumpers get swapped between matches. Design the mount for a 60-second, tool-free change."]],
+      take:["Battery and electronics placement set CG and wiring.","Bumpers must wrap the perimeter and swap fast.","Finish with an interference + weight check."],
+      res:[["FRCDesign — Assembly","https://frcdesign.org/learning-course/",false]]},
+   ]},
+   {title:"Design handbook", lessons:[
+     {id:"r-power", title:"Power transmission fundamentals", min:14, intro:"Before designing a mechanism, get the physics: motor curves, gearing, and how belts and chains actually transmit power without destroying themselves.",
+      sec:[
+        {h:"Motors, torque & speed", x:"1", fig:"motorCurve", body:"A motor trades <b>torque</b> for <b>speed</b> along a straight line; peak power sits in the middle. Read the curve, then size a gearbox reduction for the torque and speed you actually need.",
+         steps:["Read the motor's torque/speed curve.","Size a gearbox reduction for the required torque and speed.","Support shafts in bearings with the correct bore and retention.","Design for <b>stall</b> torque and current, not the average."]},
+        {h:"Belts, chains & backlash", x:"2", fig:"belt", body:"Power transmission needs proper <b>tensioning</b>; slack causes skipped teeth and <b>backlash</b> (lost motion). Tension every run and mind the play in your gear trains.",
+         steps:["Choose belt vs. chain for the load and speed.","Add a tensioner to every belt/chain run.","Account for backlash in geared mechanisms."]},
+      ],
+      notes:[["warn","Mechanisms fail at the worst case — always design for stall torque and current draw, not typical operation."]],
+      take:["Torque falls as speed rises; peak power is in the middle.","Size reductions for stall, not average.","Tension every belt/chain; account for backlash."],
+      res:[["FRCDesign — Design Handbook","https://frcdesign.org/design-handbook/",false]]},
+     {id:"r-mech", title:"Mechanism archetypes: shooters, intakes, elevators", min:14, intro:"Apply the fundamentals to the three FRC archetypes, each with its own golden rules.",
+      sec:[
+        {h:"Shooters", x:"1", fig:"belt", body:"A shooter controls a game piece's <b>trajectory</b> through <b>exit velocity</b>, <b>compression/wrap</b> on the flywheel, and <b>backspin</b>. Tune these together for consistent range.",
+         steps:["Set exit velocity for the target range.","Set flywheel compression and wrap angle.","Add backspin to stabilize the shot."]},
+        {h:"Intakes & elevators", x:"2", fig:"elevator", body:"Intakes follow the golden rules: <b>robustness</b>, a solid <b>pivot</b>, fully-supported <b>rollers</b>, and no unsupported ('zombie') axles. Elevators use rigid <b>bearing blocks</b>, clean chain/cable attachment, and correct rigging with hard stops.",
+         steps:["Build robust intake pivots and fully-supported rollers.","Use bearing blocks and hard stops on elevators.","Attach chain/cable cleanly and tension every run."]},
+      ],
+      notes:[["warn","No zombie axles — support every shaft on both ends. Cantilevered axles bend, bind, and fail under load."]],
+      take:["Shooters: tune exit velocity, compression, and spin together.","Intakes: robust pivots, supported rollers, no zombie axles.","Elevators: bearing blocks, hard stops, tensioned rigging."],
+      res:[["FRCDesign — Design Handbook","https://frcdesign.org/design-handbook/",false]]},
+   ]},
+ ]},
+];
+
+/* =========================================================================
+   RENDER + ROUTING
+   ========================================================================= */
+// flatten lessons for prev/next and progress
+const FLAT=[];
+COURSE.forEach(tr=>tr.units.forEach(u=>u.lessons.forEach(l=>FLAT.push({tr,u,l}))));
+const idxOf=id=>FLAT.findIndex(x=>x.l.id===id);
+const visited=new Set();
+
+const iconClock='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>';
+const iconLayers='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5ZM2 16l10 5 10-5M2 12l10 5 10-5"/></svg>';
+const iconKey='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM9 11l6 6 3-3-2-2 2-2-3-3"/></svg>';
+const iconNote='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>';
+const iconTip='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10c1 1 1.3 1.6 1.5 3h5c.2-1.4.5-2 1.5-3a6 6 0 0 0-4-10Z"/></svg>';
+const iconWarn='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>';
+const cicon={note:iconNote,tip:iconTip,warn:iconWarn};
+
+function buildTOC(){
+  const el=document.getElementById('toc');
+  el.innerHTML=COURSE.map(tr=>`
+    <div class="track-h"><span class="n">${tr.n}</span>${tr.title}</div>
+    ${tr.units.map(u=>`<div class="unit"><div class="unit-t">${u.title}</div>
+      ${u.lessons.map(l=>`<a class="lz" data-id="${l.id}" href="#${l.id}"><span class="dot"></span><span>${l.title}</span></a>`).join('')}
+    </div>`).join('')}
+  `).join('');
+}
+
+function renderLesson(id){
+  const i=idxOf(id); if(i<0) return;
+  const {tr,u,l}=FLAT[i];
+  visited.add(id);
+  const secs=l.sec.map(s=>`
+    <div class="sec">
+      <h2><span class="sx">${s.x}</span>${s.h}</h2>
+      ${s.body?`<p>${s.body}</p>`:''}
+      ${s.fig?`<figure class="fig"><div class="frame">${FIG[s.fig]||''}</div><figcaption><b>FIG ${l.sec.indexOf(s)+1}</b> ${s.h}</figcaption></figure>`:''}
+      ${s.steps?`<ol class="steps">${s.steps.map(t=>`<li>${t}</li>`).join('')}</ol>`:''}
+    </div>`).join('');
+  const notes=(l.notes||[]).map(([t,x])=>`<div class="callout ${t}">${cicon[t]}<div><span class="ct">${t==='warn'?'Watch out':t}</span><span class="cbody">${x}</span></div></div>`).join('');
+  const take=l.take?`<div class="takeaways"><h3>${iconKey} Key takeaways</h3><ul>${l.take.map(t=>`<li>${t}</li>`).join('')}</ul></div>`:'';
+  const res=l.res?`<div class="resources">${l.res.map(([t,uu,yt])=>`<a class="res" href="${uu}" target="_blank" rel="noopener">${yt?YT:LK} ${t}</a>`).join('')}</div>`:'';
+  const prev=FLAT[i-1], next=FLAT[i+1];
+  const pager=`<div class="pager">
+    ${prev?`<div class="pg prev" data-go="${prev.l.id}"><div class="k">‹ Previous</div><div class="t">${prev.l.title}</div></div>`:`<div class="pg prev disabled"><div class="k">‹ Previous</div><div class="t">Start of course</div></div>`}
+    ${next?`<div class="pg next" data-go="${next.l.id}"><div class="k">Next ›</div><div class="t">${next.l.title}</div></div>`:`<div class="pg next disabled"><div class="k">Next ›</div><div class="t">End of course</div></div>`}
+  </div>`;
+  document.getElementById('page').innerHTML=`
+    <div class="crumb"><b>${tr.title}</b> &nbsp;/&nbsp; ${u.title}</div>
+    <h1 class="lesson-h">${l.title}</h1>
+    <div class="lmeta">
+      <span class="lmeta-i">${iconLayers} Lesson ${i+1} of ${FLAT.length}</span>
+      <span class="lmeta-i">${iconClock} ${l.min} min read</span>
+    </div>
+    <p class="intro">${l.intro}</p>
+    ${secs}${notes}${take}${res}${pager}`;
+  document.getElementById('tbLesson').textContent=l.title;
+  // toc active + done state
+  document.querySelectorAll('.toc .lz').forEach(a=>{
+    a.classList.toggle('active',a.dataset.id===id);
+    if(visited.has(a.dataset.id)) a.classList.add('done');
+  });
+  const active=document.querySelector('.toc .lz.active'); if(active) active.scrollIntoView({block:'nearest'});
+  const pct=Math.round(visited.size/FLAT.length*100);
+  document.getElementById('progBar').style.width=pct+'%';
+  document.getElementById('progL').textContent=pct+'%';
+  window.scrollTo(0,0);
+  closeMenu();
+}
+
+// nav wiring
+document.getElementById('page').addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){location.hash=g.dataset.go;}});
+addEventListener('hashchange',()=>{const id=location.hash.slice(1); if(idxOf(id)>=0) renderLesson(id);});
+
+// mobile menu
+const toc=document.getElementById('toc'), scrim=document.getElementById('scrim');
+function closeMenu(){toc.classList.remove('open');scrim.classList.remove('open');}
+document.getElementById('menuBtn').addEventListener('click',()=>{toc.classList.toggle('open');scrim.classList.toggle('open');});
+scrim.addEventListener('click',closeMenu);
+
+buildTOC();
+const start=location.hash.slice(1);
+renderLesson(idxOf(start)>=0?start:FLAT[0].l.id);
+</script>
+<script>(function(){var tg=document.getElementById("themeTog");if(tg)tg.addEventListener("click",function(){var d=document.documentElement.getAttribute("data-theme")==="dark";if(d){document.documentElement.removeAttribute("data-theme");try{localStorage.setItem("dp-theme","");}catch(e){}}else{document.documentElement.setAttribute("data-theme","dark");try{localStorage.setItem("dp-theme","dark");}catch(e){}}});})();</script>
+</body>
+</html>
